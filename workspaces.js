@@ -6,10 +6,7 @@ const isDebug = true;
 const debug = isDebug ? console.log : () => {};
 
 // TODO
-// set window name to workspace
 // Renaming to an existing name check
-// Change Single Quote to Double
-// Round Icons
 // Autocomplete save workspace name (case insensitive)
 // Search Tabs (autocomplete)
 // Context menu right click to add workspace
@@ -17,7 +14,7 @@ const debug = isDebug ? console.log : () => {};
 // Use calc for max-width & max-height with ems
 // Multiple JS files / Function Sections
 // Privacy statement
-// Tab url as label title 
+// set window name to workspace - https://bugs.chromium.org/p/chromium/issues/detail?id=1190160
 // Preferances:
 // - urls
 //     - ignore duplicates in workspaces
@@ -48,33 +45,33 @@ async function renderWorkspacesList() {
     if (workspaces.length > 0) {
         workspaces.forEach(workspace => {
             const viewButton = document.createElement("button");
-            viewButton.setAttribute('class', 'viewWorkspace');
+            viewButton.setAttribute("class", "viewWorkspace");
             viewButton.textContent = workspace;
             viewButton.addEventListener("click", function () {
                 openWorkspace(workspace);
             });
             fragment.appendChild(viewButton);
             const editButton = document.createElement("button");
-            editButton.setAttribute('class', 'editWorkspace');
+            editButton.setAttribute("class", "editWorkspace");
             editButton.addEventListener("click", function () {
                 editWorkspace(workspace);
             });
             const svg = document.createElement("img");
-            svg.setAttribute('class', 'editWorkspaceImage');
-            svg.setAttribute('src', 'icons/pen-to-square.svg');
+            svg.setAttribute("class", "editWorkspaceImage");
+            svg.setAttribute("src", "icons/pen-to-square.svg");
             editButton.appendChild(svg);
             fragment.appendChild(editButton);
             const flexBreak = document.createElement("div");
-            flexBreak.setAttribute('class', 'flexRowsBreak');
+            flexBreak.setAttribute("class", "flexRowsBreak");
             fragment.appendChild(flexBreak);
         });
     } else {
         const message = document.createElement("span");
-        message.setAttribute('class', 'noWorkspaces');
+        message.setAttribute("class", "noWorkspaces");
         message.innerHTML = "You don't have any saved workspaces. You can create one below.";
         fragment.appendChild(message);
     }
-    const workspacesDiv = document.getElementById('workspaces');
+    const workspacesDiv = document.getElementById("workspaces");
     while (workspacesDiv.firstChild) {
         workspacesDiv.removeChild(workspacesDiv.firstChild);
     }
@@ -113,8 +110,8 @@ async function getWorkspaceTabs(workspace) {
 }
 
 function editWorkspace(workspace) {
-    setElement('editWorkspaceName', workspace);
-    setElement('editOriginalName', workspace);
+    setElement("editWorkspaceName", workspace);
+    setElement("editOriginalName", workspace);
     renderEditTabsList(workspace);
     switchView("editView");
 }
@@ -124,22 +121,27 @@ async function renderEditTabsList(workspace) {
     const tabs = await getWorkspaceTabs(workspace);
     tabs.forEach((tab, i)  => {
         const checkbox = document.createElement("input");
-        checkbox.setAttribute('id', 'tab'+i);  
-        checkbox.setAttribute('class', 'editTabCheckbox'); 
-        checkbox.setAttribute('type', 'checkbox');
-        checkbox.setAttribute('checked', 'checked');
-        checkbox.setAttribute('value', tab.url);
+        checkbox.setAttribute("id", "tab"+i);  
+        checkbox.setAttribute("class", "editTabCheckbox"); 
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("checked", "checked");
+        checkbox.setAttribute("value", tab.url);
         fragment.appendChild(checkbox);
         const label = document.createElement("label");
-        label.setAttribute('for', 'tab'+i);
-        label.setAttribute('class','editTabLabel');
-        label.innerText = tab.title !== "" ? tab.title : tab.url;
+        label.setAttribute("for", "tab"+i);
+        label.setAttribute("class", "editTabLabel");
+        if (tab.title !== "") {
+            label.innerText = tab.title;
+            label.setAttribute("title", tab.url);
+        } else {
+            label.innerText = tab.url;
+        }
         fragment.appendChild(label);
         const flexBreak = document.createElement("div");
-        flexBreak.setAttribute('class', 'flexRowsBreak');
+        flexBreak.setAttribute("class", "flexRowsBreak");
         fragment.appendChild(flexBreak);
     });
-    const editTabsDiv = document.getElementById('editTabs');
+    const editTabsDiv = document.getElementById("editTabs");
     while (editTabsDiv.firstChild) {
         editTabsDiv.removeChild(editTabsDiv.firstChild);
     }
@@ -151,7 +153,7 @@ function handleEditNameChange() {
 }
 
 async function handleEditDelete() {
-    const workspaceName = getElement('editOriginalName');
+    const workspaceName = getElement("editOriginalName");
     //FIXME other browser support
     await chrome.storage.local.remove(workspaceName);
     renderWorkspacesList();
@@ -163,11 +165,11 @@ function handleEditCancel() {
 }
 
 async function handleEditUpdate() {
-    const oldWorkspaceName = getElement('editOriginalName');
-    const newWorkspaceName = getElement('editWorkspaceName');
+    const oldWorkspaceName = getElement("editOriginalName");
+    const newWorkspaceName = getElement("editWorkspaceName");
     let windowTabs = await getWorkspaceTabs(oldWorkspaceName);
 
-    const editTabs = document.getElementById('editTabs');
+    const editTabs = document.getElementById("editTabs");
     const editTabsChildren = editTabs.children;
     debug("Edit Tab Nodes", editTabsChildren);
     for (let i = 0; i < editTabsChildren.length; i++) {
