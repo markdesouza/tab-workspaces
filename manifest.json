@@ -1,0 +1,22 @@
+{
+    "name": "Tab Workspaces",
+    "description": "Help reduce tab warrior rage by saving your tabs into areas of interest aka workspaces. Search through your open tabs to find that tab you are missing. Reduce Chrome memory usage by stashing away workspaces you do not need open.",
+    "version": "1.0", 
+    "manifest_version": 3,
+    "permissions": ["storage", "tabs"],
+    "action": {
+        "default_popup": "workspaces.html",
+        "default_icon": {
+            "16": "/images/house-laptop.png",
+            "32": "/images/house-laptop.png",
+            "48": "/images/house-laptop.png",
+            "128": "/images/house-laptop.png"
+        }
+    },
+    "icons": {
+        "16": "/images/house-laptop.png",
+        "32": "/images/house-laptop.png",
+        "48": "/images/house-laptop.png",
+        "128": "/images/house-laptop.png"
+    }
+}

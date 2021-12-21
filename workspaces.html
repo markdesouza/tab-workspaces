@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="workspaces.css">
+  </head>
+  <body>
+    <div id="mainView">
+        <h1>Workspaces</h1>
+        <div id="workspaces"></div>
+        <div class="container">
+            <button id="saveWorkspaceButton">Save Workspace</button>
+        </div>
+        <div class="flexRowsBreak"></div>
+    </div>
+    <div id="editView">
+        <h1>Edit Workspace</h1>
+        <div id="editContainer" class="container">
+            <input id="editWorkspaceName" type='text'>
+            <input id="editOriginalName" type='hidden'>
+            <button id="editDeleteButton"><img class='deleteWorkspaceImage' src="icons/trash-can.svg"></button>
+        </div>
+        <div id="editTabs"></div>
+        <div class="container">
+            <button id="editCancelButton">Cancel</button>
+            <button id="editUpdateButton">Update</button>
+        </div>
+    </div>
+    <div id="saveView">
+        <h1>Save Workspace</h1>
+        <span id="saveText">What name should this workspace have:</span>
+        <input id="workspaceName" type='text'>
+        <div class="container">
+            <button id="cancelButton">Cancel</button>
+            <button id="saveButton">Save</button>
+        </div>
+    </div>
+    <div id="confirmView">
+        <h1>Save Workspace</h1>
+        <span id="confirmText">That workspace already exists:</span>
+        <div class="container">
+            <button id="cancelConfirmButton">Back</button>
+            <button id="confirmReplaceButton">Replace</button>
+            <button id="confirmMergeButton">Merge</button>
+        </div>
+    </div>
+  </body>
+  <script src="workspaces.js"></script>
+</html>
